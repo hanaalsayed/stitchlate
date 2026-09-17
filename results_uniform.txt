@@ -1,0 +1,15 @@
+source:              uniform random RGB
+palette size:        456 threads
+pixels tested:       50000
+seed:                7
+disagreement rate:   56.7%
+mean delta-E (RGB):  16.60
+mean delta-E (LAB):  12.99
+mean error reduction: 21.8%
+when they disagree, RGB is worse by 6.38 delta-E on average
+                    worst case:      41.80 delta-E
+
+worst single disagreement:
+  target pixel : RGB (51, 77, 255)
+  RGB picks    :   3843  RGB (40, 163, 222)  (delta-E 84.9)
+  LAB picks    :   3746  RGB (132, 74, 181)  (delta-E 43.1)
