@@ -1,19 +1,4 @@
-"""Color quantization: reducing an image to a small set of thread colors.
-
-A cross-stitch pattern can only use a handful of thread colors, so the first
-real decision is *which* colors. This is a clustering problem: find the k
-colors that best represent the thousands present in the photo.
-
-Two standard approaches:
-
-  median cut -- recursively split the color space along its longest axis.
-                Fast and deterministic, but the splits are axis-aligned, so
-                it does poorly when colors cluster diagonally.
-  k-means    -- iteratively find k centers minimizing within-cluster
-                distance. Slower, but adapts to the actual shape of the
-                data. Chosen here for that reason.
-
-"""
+"""Color quantization: reducing an image to a small set of thread colors."""
 
 import numpy as np
 

@@ -4,17 +4,18 @@ import csv
 from pathlib import Path
 
 import numpy as np
+
 from .color import rgb_to_lab
 
 DATA = Path(__file__).parent / "data" / "dmc.csv"
 
-_CODE_KEYS = ("code", "floss", "number", "dmc", "dmccode", "dmccolor",
+CODE_KEYS = ("code", "floss", "number", "dmc", "dmccode", "dmccolor",
               "dmcnumber", "id")
-_NAME_KEYS = ("name", "description", "colorname", "color", "desc")
-_R_KEYS = ("r", "red")
-_G_KEYS = ("g", "green")
-_B_KEYS = ("b", "blue")
-_HEX_KEYS = ("hex", "hexcode", "hexcolor", "rgbcolor", "rgb", "hexrgb", "html")
+NAME_KEYS = ("name", "description", "colorname", "color", "desc")
+R_KEYS = ("r", "red")
+G_KEYS = ("g", "green")
+B_KEYS = ("b", "blue")
+HEX_KEYS = ("hex", "hexcode", "hexcolor", "rgbcolor", "rgb", "hexrgb", "html")
 
 def _normalize(s):
     return s.strip().lower().replace(" ", "").replace("_", "").replace("#", "")
@@ -53,12 +54,12 @@ class Palette:
             if not fields:
                 raise ValueError(f"{path} has no header row")
 
-            code_col = _find(fields, _CODE_KEYS)
-            name_col = _find(fields, _NAME_KEYS)
-            hex_col = _find(fields, _HEX_KEYS)
-            r_col = _find(fields, _R_KEYS)
-            g_col = _find(fields, _G_KEYS)
-            b_col = _find(fields, _B_KEYS)
+            code_col = _find(fields, CODE_KEYS)
+            name_col = _find(fields, NAME_KEYS)
+            hex_col = _find(fields, HEX_KEYS)
+            r_col = _find(fields, R_KEYS)
+            g_col = _find(fields, G_KEYS)
+            b_col = _find(fields, B_KEYS)
 
             if code_col is None:
                 raise ValueError(

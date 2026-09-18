@@ -1,26 +1,9 @@
-"""Measure how often naive RGB matching picks a different thread than LAB.
-
-This is the empirical justification for doing all color matching in CIELAB.
-
-Two sampling modes:
-
-  uniform  -- random RGB colors spread evenly through the cube. Measures the
-              methods against each other across all possible colors.
-  image    -- pixels drawn from a real photograph. Real images cluster in
-              skin tones, sky, foliage and neutrals rather than filling the
-              RGB cube, so this is the number that describes actual use.
-
-Run from the repo root:
-
-    python -m scripts.rgb_vs_lab
-    python -m scripts.rgb_vs_lab --samples 50000 --seed 7
-    python -m scripts.rgb_vs_lab --image examples/input.jpg
-"""
+"""Measure how often naive RGB matching picks a delta_eerent thread than LAB."""
 
 import argparse
 import numpy as np
 
-from stitchlate.color import diff, rgb_to_lab
+from stitchlate.color import delta_e, rgb_to_lab
 from stitchlate.palette import Palette
 
 
@@ -77,8 +60,8 @@ def main():
     pick_lab = nearest_lab(pixels_lab, pal.lab)
 
     disagree = pick_rgb != pick_lab
-    err_rgb = diff(pixels_lab, pal.lab[pick_rgb])
-    err_lab = diff(pixels_lab, pal.lab[pick_lab])
+    err_rgb = delta_e(pixels_lab, pal.lab[pick_rgb])
+    err_lab = delta_e(pixels_lab, pal.lab[pick_lab])
 
     print(f"source:              {source}")
     print(f"palette size:        {len(pal)} threads")

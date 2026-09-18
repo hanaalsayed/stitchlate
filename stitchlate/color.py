@@ -1,3 +1,4 @@
+""" """
 import numpy as np
 
 # sRGB to XYZ conversion matrix and D65 white point
@@ -16,17 +17,17 @@ def rgb_to_lab(rgb):
     rgb = np.asarray(rgb, dtype=np.float64)
     # Convert RGB to LAB color space
     shape = rgb.shape
-    reshape = rgb.reshape(-1, 3)
-    xyz = (srgb_to_linear(reshape) @ MATRIX.T) / WHITE
+    flat = rgb.reshape(-1, 3)
+    xyz = (srgb_to_linear(flat) @ MATRIX.T) / WHITE
     # Convert XYZ to LAB
     eps, kappa = 216 / 24389, 24389 / 27
     f = np.where(xyz > eps, np.cbrt(xyz), (kappa * xyz + 16) / 116)
-    l = 116 * f[:, 1] - 16
+    L_ = 116 * f[:, 1] - 16
     a = 500 * (f[:, 0] - f[:, 1])
     b = 200 * (f[:, 1] - f[:, 2])
     return np.stack((l, a, b), axis=-1).reshape(shape)
 
-def diff(lab1, lab2):
+def delta_e(lab1, lab2):
     # Calculate the Euclidean distance between two LAB colors
     return np.sqrt(np.sum((np.asarray(lab1, float) - np.asarray(lab2, float)) ** 2, 
     axis=-1))

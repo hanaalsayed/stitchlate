@@ -1,5 +1,5 @@
 import numpy as np
-from stitchlate.color import rgb_to_lab, diff
+from stitchlate.color import rgb_to_lab, delta_e
 
 def test_white():
     lab = rgb_to_lab([255, 255, 255])
@@ -15,7 +15,7 @@ def test_red_reference():
     assert np.allclose(lab, [53.2408, 80.0925, 67.2032], atol=0.01)
 
 def test_identical_colors_have_zero_distance():
-    assert diff(rgb_to_lab([12, 200, 9]), rgb_to_lab([12, 200, 9])) == 0
+    assert delta_e(rgb_to_lab([12, 200, 9]), rgb_to_lab([12, 200, 9])) == 0
 
 def test_vectorized_over_image():
     img = np.random.randint(0, 256, (7, 5, 3))
