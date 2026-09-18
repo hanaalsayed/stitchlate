@@ -1,5 +1,7 @@
 import numpy as np
-from stitchlate.color import rgb_to_lab, delta_e
+
+from stitchlate.color import delta_e, rgb_to_lab
+
 
 def test_white():
     lab = rgb_to_lab([255, 255, 255])

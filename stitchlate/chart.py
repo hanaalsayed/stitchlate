@@ -3,6 +3,7 @@
 import numpy as np
 from PIL import Image
 
+
 def render_preview(labels, palette, cell=8):
     """Draw the stitch grid as solid blocks of thread color.
 

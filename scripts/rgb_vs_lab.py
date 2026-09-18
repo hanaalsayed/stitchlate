@@ -1,6 +1,7 @@
-"""Measure how often naive RGB matching picks a delta_eerent thread than LAB."""
+"""Measure how often naive RGB matching picks a different thread than LAB."""
 
 import argparse
+
 import numpy as np
 
 from stitchlate.color import delta_e, rgb_to_lab

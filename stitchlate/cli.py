@@ -10,7 +10,9 @@ from pathlib import Path
 import numpy as np
 
 from .chart import render_preview, thread_usage
+from .cleanup import count_isolated, reduce_confetti
 from .color import rgb_to_lab
+from .dither import floyd_steinberg
 from .image_io import finished_size, load_grid
 from .palette import Palette
 from .quantize import quantize_image
@@ -27,6 +29,12 @@ def build_parser():
                    help="pattern width in stitches (default: 100)")
     p.add_argument("-c", "--colors", type=int, default=25,
                    help="number of thread colors (default: 25)")
+    p.add_argument("--dither", action="store_true",
+                help="spread color error to nearby stitches for smoother "
+                    "gradients (makes more confetti)")
+    p.add_argument("--declutter", type=int, default=0, metavar="N",
+                   help="passes of confetti removal; 1-2 is usually enough "
+                        "(recommended with --dither)")
     p.add_argument("-o", "--out", default="out", help="output directory")
     p.add_argument("--aida", type=int, default=14,
                    help="Aida cloth count, for the finished size estimate")
@@ -43,7 +51,14 @@ def main(argv=None):
     grid = load_grid(args.image, args.width)
     h, w = grid.shape[:2]
     # Pick the k best colors.
-    centers, labels = quantize_image(rgb_to_lab(grid), args.colors, seed=args.seed)
+    lab = rgb_to_lab(grid)
+    centers, labels = quantize_image(lab, args.colors, seed=args.seed)
+    if args.dither:
+        labels = floyd_steinberg(lab, centers)
+    if args.declutter:
+        before = count_isolated(labels)
+        labels, changed = reduce_confetti(labels, passes=args.declutter)
+        after = count_isolated(labels)
     # Match each color to the closest real DMC thread.
     full = Palette.load()
     center_to_thread = full.nearest(centers)
@@ -69,6 +84,9 @@ def main(argv=None):
         print(f"               {collapsed} cluster(s) collapsed -- distinct "
               f"clusters matched the same thread")
     print(f"preview:       {preview_path}")
+    if args.declutter:
+        print(f"declutter:     {before} -> {after} isolated stitches "
+                f"({changed} changed)")
     print()
     print("top threads:")
     for code, name, _, count in usage[:10]:
