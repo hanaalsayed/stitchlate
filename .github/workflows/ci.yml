@@ -9,6 +9,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: pip install -r requirements.txt pytest ruff
+      - run: pip install -e . pytest ruff
       - run: python -m ruff check .
       - run: python -m pytest -v
