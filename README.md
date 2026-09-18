@@ -1,6 +1,8 @@
 # stitchlate
 
-[![CI](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml/badge.svg)](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml)
+<p align="center">
+  <img src="examples/gals_stitchlate_250.png" width="600" alt="250 stitches wide, 25 colors">
+</p>
 
 stitch + translate. Turn a photo into a cross-stitch pattern using real DMC thread colors.
 
@@ -110,6 +112,9 @@ python -m scripts.rgb_vs_lab --image examples/gals.png --samples 50000 --seed 7
 | 250 stitches, no dither | 250 stitches, dithered |
 |---|---|
 | ![](examples/gals_stitchlate_250.png) | ![](examples/gals_stitchlate_250_dither.png) |
+| 100 stitches, no dither | 100 stitches, dithered |
+|---|---|
+| ![](examples/gals_stitchlate_100.png) | ![](examples/gals_stitchlate_100_dither.png) |
 
 Floyd-Steinberg dithering is the standard way to reduce an image to a small
 palette, so I implemented it and expected it to help. It made the patterns
