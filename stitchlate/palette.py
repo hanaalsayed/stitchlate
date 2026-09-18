@@ -9,6 +9,9 @@ from .color import rgb_to_lab
 
 DATA = Path(__file__).parent / "data" / "dmc.csv"
 
+# DMC color files online all name their columns differently, so instead of
+# editing the file by hand every time I download a new one
+# Case, spaces and underscores are ignored.
 CODE_KEYS = ("code", "floss", "number", "dmc", "dmccode", "dmccolor",
               "dmcnumber", "id")
 NAME_KEYS = ("name", "description", "colorname", "color", "desc")
@@ -48,6 +51,13 @@ class Palette:
 
     @classmethod
     def load(cls, path=DATA):
+        """Read a thread palette from a CSV file.
+
+        Code kept as text because some DMC codes aren't numbers,
+        like Ecru, Blanc and B5200.
+        """
+        # utf-8-sig removes the hidden marker Excel puts at the start of files
+        # it saves.
         with open(path, newline="", encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             fields = reader.fieldnames
@@ -74,7 +84,7 @@ class Palette:
             for lineno, row in enumerate(reader, start=2):
                 code = (row.get(code_col) or "").strip()
                 if not code:
-                    continue  # skip blank trailing lines
+                    continue 
                 try:
                     if hex_col is not None:
                         color = _hex_to_rgb(row[hex_col])
@@ -96,12 +106,14 @@ class Palette:
     def nearest(self, lab):
         """Index of the closest thread to each LAB color. (...,3) -> (...)"""
         lab = np.asarray(lab, dtype=np.float64)
+        # Comparing (n,1,3) to (1,k,3) gives an (n,k) table of distances.
         flat = lab.reshape(-1, 1, 3)
         d2 = ((flat - self.lab[None, :, :]) ** 2).sum(-1)
         return d2.argmin(axis=1).reshape(lab.shape[:-1])
 
     def subset(self, indices):
         """A new Palette containing only the given indices, deduped, in order."""
+        # dict.fromkeys removes duplicates but keeps the original order.
         idx = list(dict.fromkeys(int(i) for i in indices))
         return Palette([self.codes[i] for i in idx],
                        [self.names[i] for i in idx],
