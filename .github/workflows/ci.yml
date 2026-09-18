@@ -10,5 +10,5 @@ jobs:
         with:
           python-version: "3.13"
       - run: pip install -r requirements.txt pytest ruff
-      - run: ruff check .
-      - run: pytest -v
+      - run: python -m ruff check .
+      - run: python -m pytest -v
