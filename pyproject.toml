@@ -11,3 +11,9 @@ dependencies = ["numpy>=1.24", "pillow>=10.0"]
 
 [project.scripts]
 stitchlate = "stitchlate.cli:main"
+
+[tool.setuptools]
+packages = ["stitchlate"]
+
+[tool.setuptools.package-data]
+stitchlate = ["data/*.csv"]
