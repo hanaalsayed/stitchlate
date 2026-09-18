@@ -5,12 +5,12 @@
 stitch + translate. Turn a photo into a cross-stitch pattern using real DMC thread colors.
 
 <p align="center">
-  <img src="examples/gals_stitchlate_250.png" width="500" alt="250 stitches wide, 25 colors">
+  <img src="examples/gals_stitchlate_250.png" width="400" alt="250 stitches wide, 25 colors">
 </p>
 
 ## Why I built this
 
-I wanted to take a creative hobby and look at it technically, to find where the two actually meet. I ran a small craft shop for a couple of years, so stitch patterns were something I already understood as a craft. This project was me translating what they look like as a computing problem.
+I wanted to take a creative hobby and look at it technically, to find where the two actually meet. I ran a small craft shop for a couple of years, so stitch patterns were something I already understood. This project was me translating what they look like as a computing problem.
 
 There was more to it than I expected. Picking the colors is a clustering problem, matching them to real thread is a nearest-neighbor search, and both of those depend on measuring color the way people see it instead of the way screens store it.
 
