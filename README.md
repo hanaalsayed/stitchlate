@@ -1,4 +1,4 @@
-# stitchlate
+# stitchlate ⋆˚࿔
 
 [![CI](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml/badge.svg)](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml)
 
