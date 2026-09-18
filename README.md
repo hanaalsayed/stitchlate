@@ -1,10 +1,10 @@
 # stitchlate
 
-![CI](https://github.com/hanals0876/stitchlate/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml/badge.svg)](https://github.com/hanaalsayed/stitchlate/actions/workflows/ci.yml)
 
 stitch + translate. Turn a photo into a cross-stitch pattern using real DMC thread colors.
 
-![250 stitches wide, 25 colors](examples/preview_250.png)
+![250 stitches wide, 25 colors](examples/gal_stitchlate_250.png)
 
 ## Why I built this
 
@@ -15,7 +15,7 @@ There was more to it than I expected. Picking the colors is a clustering problem
 ## Install
 
 ```bash
-git clone https://github.com/hanals0876/stitchlate.git
+git clone https://github.com/hanaalsayed/stitchlate.git
 cd stitchlate
 pip install -e .
 ```
@@ -190,7 +190,7 @@ the evidence for this.
 
 - **Match colors in LAB, not RGB.** 19% lower color error on a real photograph.
 - **k-means over median cut.** Median cut is faster, but it can only split the color space along axis-aligned planes, so it does badly when colors are grouped diagonally.
-- **Cluster on a sample, not every pixel.** The assign step builds an (n, k) array, which is 12 million rows for a large photo. A few thousand pixels already capture an image's color distribution,so clustering a sample and then labelling every pixel in one pass is enough — 5.4x faster at 120,000 pixels with k=25, and the gap widens as images get bigger.
+- **Cluster on a sample, not every pixel.** The assign step builds an (n, k) array, which is 12 million rows for a large photo. A few thousand pixels already capture an image's color distribution, so clustering a sample and then labelling every pixel in one pass is enough — 5.4x faster at 120,000 pixels with k=25, and the gap widens as images get bigger.
 - **LANCZOS when shrinking.** NEAREST would sample one pixel per stitch and throw the rest away, so small details disappear.
 - **Width in stitches, not pixels.** It is the unit that decides finished size and sewing time.
 - **Seeded RNG by default.** The same photo always produces the same pattern, which also makes the tests possible.
@@ -241,8 +241,7 @@ DMC color data compiled from
 [nathantspencer/DMC-ColorCodes](https://github.com/nathantspencer/DMC-ColorCodes),
 which scrapes hex approximations from DMC's published color list. That repo has
 no license file, so it's credited here rather than claimed. Any CSV with a
-thread code column and either hex or r/g/b columns will work instead — see
-`--palette` below.
+thread code column and either hex or r/g/b columns will work instead.
 
 Thread codes and color names are DMC trademarks. This project is not
 affiliated with DMC.
