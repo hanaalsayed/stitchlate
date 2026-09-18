@@ -42,6 +42,9 @@ def build_parser():
                    help="preview pixels per stitch (default: 8)")
     p.add_argument("--seed", type=int, default=0,
                    help="RNG seed; fixed by default so runs are reproducible")
+    p.add_argument("--palette", metavar="CSV",
+                   help="path to a thread color CSV; uses the bundled DMC "
+                        "data if omitted")
     return p
 
 
@@ -60,7 +63,7 @@ def main(argv=None):
         labels, changed = reduce_confetti(labels, passes=args.declutter)
         after = count_isolated(labels)
     # Match each color to the closest real DMC thread.
-    full = Palette.load()
+    full = Palette.load(args.palette) if args.palette else Palette.load()
     center_to_thread = full.nearest(centers)
     used = full.subset(center_to_thread)
     # Point the labels at the new smaller palette.
