@@ -4,7 +4,7 @@
 
 stitch + translate. Turn a photo into a cross-stitch pattern using real DMC thread colors.
 
-![250 stitches wide, 25 colors](examples/gal_stitchlate_250.png)
+![250 stitches wide, 25 colors](examples/gals_stitchlate_250.png)
 
 ## Why I built this
 
@@ -107,13 +107,9 @@ python -m scripts.rgb_vs_lab --image examples/gals.png --samples 50000 --seed 7
 
 ### Why dithering is off by default
 
-| 100 stitches, no dither | 100 stitches, dithered |
-|---|---|
-| ![](examples/preview_100.png) | ![](examples/preview_100_dither.png) |
-
 | 250 stitches, no dither | 250 stitches, dithered |
 |---|---|
-| ![](examples/preview_250.png) | ![](examples/preview_250_dither.png) |
+| ![](examples/gals_stitchlate_250.png) | ![](examples/gals_stitchlate_250_dither.png) |
 
 Floyd-Steinberg dithering is the standard way to reduce an image to a small
 palette, so I implemented it and expected it to help. It made the patterns
@@ -176,6 +172,12 @@ more. It does not:
 Dithering works about as well here as in the fixed-palette case it was designed
 for. The reason it loses is the confetti cost, which only exists because the
 output is something a person sews by hand rather than an image on a screen.
+
+## More examples
+
+| ![](examples/cat_stitchlate_250.png) | ![](examples/teal_stitchlate_250.png) |
+|---|---|
+| cat.jpg, 250 stitches, 25 colors | teal.png, 250 stitches, 25 colors |
 
 Reproduce it:
 
