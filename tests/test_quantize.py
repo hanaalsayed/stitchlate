@@ -49,3 +49,4 @@ def test_quantize_image_shape_and_range():
     assert centers.shape == (12, 3)
     assert labels.shape == (60, 80)
     assert labels.min() >= 0 and labels.max() < 12
+
